@@ -1,0 +1,26 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+.page {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+  color: #000;
+  margin: 0 auto;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Inter, Helvetica, sans-serif;
+}
+
+.link {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

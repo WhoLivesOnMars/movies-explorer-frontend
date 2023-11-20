@@ -1,0 +1,68 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 364px 0 0;
+  min-width: 211px;
+  height: 18px;
+  gap: 17px;
+}
+
+.navigation__movies {
+  font-weight: 500;
+}
+
+.navigation__saved-movies {
+  font-weight: 400;
+}
+
+.navigation__link {
+  font-size: 13px;
+  line-height: 18px;
+  font-style: normal;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__link_active {
+  font-size: 13px;
+  line-height: 18px;
+  font-style: normal;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__account {
+  background-color: #fff;
+  color: #000;
+  width: 100px;
+  height: 32px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  border: none; 
+}
+
+.navigation__account_active {
+  background-color: #F9F9F9;
+  color: #000;
+  width: 100px;
+  height: 32px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  border: none; 
+}
