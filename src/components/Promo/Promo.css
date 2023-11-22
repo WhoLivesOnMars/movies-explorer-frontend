@@ -60,3 +60,40 @@
   color: #000; 
   border-bottom: 1px solid #000;
 }
+
+@media (max-width: 768px) {
+  .promo__container {
+    min-height: 784px;
+  }
+
+  .promo__links {
+    min-width: 244px;
+  }
+}
+
+@media (max-width: 740px) {
+  .promo__title {
+    max-width: 300px;
+    font-size: 31px;
+    line-height: 39px;
+  }
+}
+
+@media (max-width: 320px) {
+  .promo__container {
+    min-height: 570px;
+  }
+
+  .promo__link {
+    font-size: 11px;
+  }
+
+  .promo__logo {
+    width: 248px;
+    height: 248px;
+  }
+
+  .promo__links {
+    min-width: 214px;
+  }
+}

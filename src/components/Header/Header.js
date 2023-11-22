@@ -11,11 +11,9 @@ function Header({ loggedIn }) {
   return location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile' ?
     (
       <header className={`header ${isWhiteHeader ? 'header__color_white' : ''}`}>
-          <div className="header__logo">
-            <Link to="/" className="link">
-              <img src={logo} className="header__logo-image" alt="Логотип сайта" />
-            </Link>
-          </div>
+          <Link to="/" className="link">
+            <img src={logo} className="header__logo-image" alt="Логотип сайта" />
+          </Link>
           <Navigation loggedIn={loggedIn} />
       </header>
     )
