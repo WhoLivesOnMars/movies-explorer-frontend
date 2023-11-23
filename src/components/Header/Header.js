@@ -10,7 +10,7 @@ function Header({ loggedIn }) {
   const isWhiteHeader = location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile';
   return location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile' ?
     (
-      <header className={`header ${isWhiteHeader ? 'header__color_white' : ''}`}>
+      <header className={`header header__color ${isWhiteHeader ? 'header__color_white' : ''}`}>
           <Link to="/" className="link">
             <img src={logo} className="header__logo-image" alt="Логотип сайта" />
           </Link>

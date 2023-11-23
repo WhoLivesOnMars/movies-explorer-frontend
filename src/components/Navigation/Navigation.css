@@ -1,17 +1,25 @@
 .navigation {
   display: flex;
   justify-content: space-between;
-  width: 59%;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 30px;
 }
 
 .navigation__list {
   display: flex;
-  align-items: center;
   list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  gap: 17px;
+}
+
+.navigation__link {
   margin: 0;
   padding: 0;
-  min-width: 211px;
-  gap: 17px;
 }
 
 .navigation__link_white {
@@ -48,7 +56,7 @@
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  border: none; 
+  border: none;
 }
 
 .navigation__account_transparent {
@@ -61,7 +69,7 @@
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  border: none; 
+  border: none;
 }
 
 .navigation-auth__button {
@@ -81,13 +89,13 @@
   border-bottom: 2px solid #000;
 }
 
-.icon-menu__button {
+.icon-menu__button_white {
   background-image: url(../../images/navigation_icon.svg);
   background-repeat: no-repeat;
   border: none;
   color: inherit;
   background-color: transparent;
-  width: 0;
+  width: 0px;
   height: 44px;
   margin: 0;
   padding: 0;
@@ -101,7 +109,7 @@
   border: none;
   color: inherit;
   background-color: transparent;
-  width: 0;
+  width: 0px;
   height: 44px;
   margin: 0;
   padding: 0;
@@ -177,16 +185,21 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  min-width: 340px;
   gap: 28px;
 }
 
 @media (max-width: 768px) {
-  .icon-menu__button {
+  .navigation {
+    width: 100%;
+  }
+
+  .icon-menu__button_white {
     height: 44px;
     width: 44px;
     visibility: visible;
     position: relative;
+    padding: 0;
+    margin: 0;
   }
 
   .icon-menu__button_black {
@@ -194,6 +207,8 @@
     width: 44px;
     visibility: visible;
     position: relative;
+    padding: 0;
+    margin: 0;
   }
 
   .hidden {
@@ -203,9 +218,6 @@
 }
 
 @media (max-width: 581px) {
-  .navigation {
-    width: 100%;
-  }
   
   .icon-menu__button-close {
     right: 14px;
@@ -219,7 +231,8 @@
   }
 
   .navigation__list {
-    width: 0;
+    margin: 0;
+    padding: 0;
   }
 
   .navigation-auth__button {

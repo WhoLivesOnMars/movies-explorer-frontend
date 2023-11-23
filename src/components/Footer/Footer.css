@@ -66,6 +66,7 @@
 @media (max-width: 320px) {
   .footer {
     padding: 79px 10px 20px;
+    width: 100%;
   }
 
   .footer__title {
