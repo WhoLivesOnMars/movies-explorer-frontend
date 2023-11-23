@@ -2,6 +2,8 @@
   margin: 0 auto;
   padding: 79px 70px 20px;
   background-color: #FAFAFA;
+  max-width: 1280px;
+  box-sizing: border-box;
 }
 
 .footer__title {

@@ -1,7 +1,9 @@
 .techs {
-  margin: 0;
   padding: 100px 70px;
   background-color: #F5F5F5;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .techs__title {

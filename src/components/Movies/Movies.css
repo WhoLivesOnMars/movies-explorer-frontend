@@ -1,7 +1,11 @@
 .all-movies {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  max-width: 1280px;
+}
+
+@media (max-width: 320px) {
+  .main {
+    width: 100%;
+  }
 }

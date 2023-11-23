@@ -37,7 +37,7 @@ function Navigation({ loggedIn }) {
           </NavLink>
         </li>
       </ul>
-      <NavLink to="/profile" className="button-account link hidden">
+      <NavLink to="/profile" className="link hidden">
         <button
           className={`${isWhiteHeader ? 'navigation__account_transparent' : 'navigation__account_white'}`}
           type="button"
@@ -84,7 +84,7 @@ function Navigation({ loggedIn }) {
               </NavLink>
             </li>
           </ul>
-          <NavLink to="/profile" className="button-account link">
+          <NavLink to="/profile" className="link">
             <button
               className="navigation__account_transparent"
               type="button"

@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.search-form__button:hover {
+  opacity: .8;
+}
+
 .search-form__checkbox {
   display: flex;
   justify-content: center;

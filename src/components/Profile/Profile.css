@@ -3,6 +3,8 @@
   justify-content: center;
   margin: 0 auto;
   align-items: center;
+  max-width: 1280px;
+  box-sizing: border-box;
 }
 
 .profile__container {

@@ -5,9 +5,10 @@
   box-sizing: border-box;
   background-color: #465DFF;
   min-height: 74px;
-  margin: 0;
+  margin: 0 auto;
   padding: 0 70px;
   border: none;
+  max-width: 1280px;
 }
 
 .header__logo-image {
