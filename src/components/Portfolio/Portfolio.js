@@ -4,7 +4,7 @@ import './Portfolio.css';
 function Portfolio() {
   return (
     <>
-      <h2 className="portfolio__title">Портфолио</h2>
+      <h2 className="portfolio">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__item">
           <a href="https://github.com/WhoLivesOnMars/how-to-learn" target="_blank" rel="noopener noreferrer" className="portfolio__link link">

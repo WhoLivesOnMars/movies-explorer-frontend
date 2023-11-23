@@ -18,7 +18,7 @@ function AboutMe() {
               4 года проработала в сфере управления проектами, начиная с позиции администратора IT-проектов в "ООО Газпромнефть Бизнес-сервис", а затем и менеджера IT-проектов в компании "Северсталь Инфоком".
               В 2023г. закончила курс "Веб-разработчик" в "Яндекс Практикум" и на текущий момент развиваюсь в области веб-разработки.
             </p>
-            <a href="https://github.com/WhoLivesOnMars" className="about-me__github link">Github</a>
+            <a href="https://github.com/WhoLivesOnMars" rel="noopener noreferrer" target="_blank" className="about-me__github link">Github</a>
           </div>
         </div>
         <Portfolio />

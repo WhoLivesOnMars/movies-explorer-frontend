@@ -1,22 +1,35 @@
-import React from 'react';
+import React, {useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/header_logo.svg';
 import './Login.css';
 
 function Login() {
  
+  const [email, setEmail] = useState('pochta@yandex.ru');
+  const [password, setPassword] = useState('000000000000');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="authentication">
       <div className="authentication__container">
-        <div className="header__logo">
-          <Link to="/" className="link">
-            <img src={logo} className="header__logo-image" alt="Логотип сайта" />
-          </Link>
-        </div>
+        <Link to="/" className="link">
+          <img src={logo} className="header__logo-image" alt="Логотип сайта" />
+        </Link>
         <h3 className="authentication__title">
           Рады видеть!
         </h3>
-        <form className="authentication__form">
+        <form className="authentication__form" onSubmit={handleSubmit}>
           <fieldset className="authentication__fieldset">
             <div className="authentication__field">
               <label className="authentication__label">E-mail</label>
@@ -29,7 +42,8 @@ function Login() {
                 required
                 minLength="6"
                 maxLength="30"
-                value="pochta@yandex.ru"
+                value={email}
+                onChange={handleEmailChange}
               />
               <span className="authentication__input-error" />
             </div>
@@ -44,7 +58,8 @@ function Login() {
                 required
                 minLength="8"
                 maxLength="30"
-                value="000000000000"
+                value={password}
+                onChange={handlePasswordChange}
               />
               <span className="authentication__input-error" />
             </div>

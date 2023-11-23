@@ -11,7 +11,7 @@ function Movies({ movies }) {
   //const [cards, setCards] = useState({})
 
   return (
-    <main className="all-movies">
+    <main className="content">
       <SearchForm />
       <MoviesCardList movies={movies} />
     </main>
