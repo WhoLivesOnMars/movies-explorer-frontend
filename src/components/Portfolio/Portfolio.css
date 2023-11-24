@@ -11,7 +11,7 @@
 .portfolio__list {
   list-style-type: none;
   margin: 0;
-  padding: 30px 0 125px;
+  padding: 17px 0 100px;
 }
 
 .portfolio__item {
@@ -54,11 +54,11 @@
 
 @media (max-width: 768px) {
   .portfolio__link {
-    padding: 30px 0 19px;
+    padding: 18px 0 10px;
   }
 
   .portfolio__list {
-    padding: 30px 0 0;
+    padding: 18px 0 0;
   }
 
   .portfolio__subtitle {
@@ -71,12 +71,17 @@
 }
 
 @media (max-width: 320px) {
-  .portfolio__title {
+  .portfolio {
     font-size: 14px;
+    line-height: 20px;
+  }
+
+  .portfolio__link {
+    padding: 17px 0 21px;
   }
 
   .portfolio__list {
-    padding: 20px 0 0;
+    padding: 13px 0 0;
   }
 
   .portfolio__subtitle {
