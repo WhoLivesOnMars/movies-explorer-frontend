@@ -215,6 +215,10 @@
     visibility: hidden;
     width: 0;
   }
+
+  .navigation-auth__button {
+    margin-left: 24px;
+  }
 }
 
 @media (max-width: 581px) {
@@ -238,7 +242,7 @@
   .navigation-auth__button {
     height: 26px;
     font-size: 10px;
-    margin-left: 26px;
+    margin-left: 19px;
     padding: 5px 12px;
   }
 
