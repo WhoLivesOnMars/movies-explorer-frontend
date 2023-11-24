@@ -20,7 +20,9 @@ function App() {
   const location = useLocation();
   const movies = Array(12).fill(null)
 
- 
+  useEffect(() => {
+    setLoggedIn(location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile');
+  }, [location.pathname]);  
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -33,7 +35,7 @@ function App() {
             path="/"
             element={
               <Main 
-                
+                loggedIn={loggedIn}
               />}
           />
           <Route 
