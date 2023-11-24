@@ -114,7 +114,7 @@
 
   .about-me__content {
     max-width: 100%;
-    padding: 15px 0 10px;
+    padding: 37px 0 10px;
   }
 }
 
@@ -136,7 +136,7 @@
   .about-me__photo {
     width: 292px;
     height: 352px;
-    padding: 0 0 22px;
+    padding: 0;
   }
 
   .about-me__subtitle {
