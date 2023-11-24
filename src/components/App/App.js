@@ -18,6 +18,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   
   const location = useLocation();
+  const movies = Array(12).fill(null)
 
   useEffect(() => {
     setLoggedIn(location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile');
@@ -26,7 +27,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header 
+        <Header
           loggedIn={loggedIn}
         />
         <Routes>
@@ -41,12 +42,14 @@ function App() {
             path="/movies"
             element={
               <Movies
+                movies={movies}
               />}
           />
           <Route 
             path="/saved-movies"
             element={
               <SavedMovies
+                movies={movies}
               />}
           />
           <Route 

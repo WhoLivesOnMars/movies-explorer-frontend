@@ -8,7 +8,6 @@
   color: #000;
   margin: 0 auto;
   box-sizing: border-box;
-  max-width: 100%;
   min-width: 320px;
   min-height: 100vh;
   font-family: Inter, Helvetica, sans-serif;
@@ -21,6 +20,11 @@
 }
 
 .link:hover {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: pointer;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
