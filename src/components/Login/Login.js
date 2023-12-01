@@ -1,24 +1,38 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import { Validate } from '../../utils/Validate';
 import logo from '../../images/header_logo.svg';
 import './Login.css';
 
-function Login() {
- 
-  const [email, setEmail] = useState('pochta@yandex.ru');
-  const [password, setPassword] = useState('000000000000');
+function Login({ onLogin }) {
+  const [isValid, setIsValid] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const [formValue, setFormValue] = useState({
+    email: '',
+    password: ''
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  };
+    if (!formValue.email || !formValue.password){
+      return;
+    }
+    const { email, password } = formValue;
+    onLogin(email, password);
+    setFormValue({ email: '', password: '' });
+  }
+
+  const handleValidate = (e) => {
+    const input = e.target;
+    input.nextSibling.textContent = Validate(input, setFormValue, formValue, setIsValid);
+  }
+
+  useEffect(() => {
+    if ((formValue.email === '') ||
+    (formValue.password === '')) {
+      setIsValid(false)
+    }
+  }, [formValue, isValid]);
 
   return (
     <div className="authentication">
@@ -42,8 +56,8 @@ function Login() {
                 required
                 minLength="6"
                 maxLength="30"
-                value={email}
-                onChange={handleEmailChange}
+                value={formValue.email}
+                onChange={handleValidate}
               />
               <span className="authentication__input-error" />
             </div>
@@ -58,14 +72,14 @@ function Login() {
                 required
                 minLength="8"
                 maxLength="30"
-                value={password}
-                onChange={handlePasswordChange}
+                value={formValue.password}
+                onChange={handleValidate}
               />
               <span className="authentication__input-error" />
             </div>
           </fieldset>
         </form>
-        <button className="authentication__submit-button" type="submit" name="registerSubmit">Войти</button>
+        <button className="authentication__submit-button" type="submit" disabled={(isValid) ? false : true} name="registerSubmit">Войти</button>
         <div className="authentication__signup">
           <p className="authentication__signup-text">Еще не зарегистрированы?</p>
           <Link to="/signup" className="authentication__login-link link">Регистрация</Link>

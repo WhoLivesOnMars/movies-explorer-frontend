@@ -140,6 +140,14 @@
   text-align: left;
 }
 
+.authentication__invalid {
+  color: #EE3465;
+}
+
+.authentication__input:invalid {
+  color: #EE3465;
+}
+
 @media (max-width: 768px) {
   .authentication__container {
     padding: 232px 0;

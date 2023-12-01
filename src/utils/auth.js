@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.movies.app.nomoredomainsmonster.ru';
+import { BASE_URL } from './Constants';
 
 function getJson(res) {
   if (res.ok) {
@@ -7,13 +7,13 @@ function getJson(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export const register = (email, password) => {
+export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ name, email, password })
   })
   .then(getJson)
 };
@@ -39,9 +39,11 @@ export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
       "Authorization" : `Bearer ${token}`
     }
   })
   .then(getJson)
+  .then(data => data)
 }

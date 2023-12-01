@@ -9,23 +9,81 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFoundError from '../NotFoundError/NotFoundError'
 import Footer from '../Footer/Footer';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import Preloader from '../Preloader/Preloader';
+import api from '../../utils/MainApi';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-
+import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
+import { register, authorize, checkToken } from '../../utils/auth.js';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ name: '', about: '' });
-  const [loggedIn, setLoggedIn] = useState(false);
-  
-  const location = useLocation();
-  const movies = Array(12).fill(null)
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '', _id: '' });
+  const [loggedIn, setLoggedIn] = useState(null);
+  const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setLoggedIn(location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile');
-  }, [location.pathname]);  
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      checkToken(token)
+      api.getCurrentUser()
+        .then((res) => {
+          setCurrentUser({ name: res.name, email: res.email, _id: res._id })
+          setLoggedIn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }, []);
+
+  function handleRegister(name, email, password) {
+    register(name, email, password)
+    .then(() => {
+      handleLogin(email, password);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  function handleLogin(email, password) {
+    authorize(email, password)
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem('token', data.token)
+        setLoggedIn(true);
+        navigate('/movies', { replace: true });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  function signOut() {
+    localStorage.clear()
+    setLoggedIn(false);
+    checkToken('');
+    navigate('/', {replace: true});
+  }
+  
+  function handleUpdateUser({ item }) {
+    api.setUserInfo({ item: item })
+    .then((user) => {
+      if (user) {
+        setCurrentUser({ name: user.data.name, email: user.data.email, _id: user.data._id })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
   
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    loggedIn === null ? <Preloader /> :
+    <CurrentUserContext.Provider value={{currentUser}}>
       <div className="page">
         <Header
           loggedIn={loggedIn}
@@ -36,45 +94,57 @@ function App() {
             element={
               <Main 
                 loggedIn={loggedIn}
-              />}
+              />
+            }
           />
           <Route 
             path="/movies"
             element={
-              <Movies
-                movies={movies}
-              />}
+              <ProtectedRouteElement 
+                element={Movies}
+                loggedIn={loggedIn}
+              />
+            }
           />
           <Route 
             path="/saved-movies"
             element={
-              <SavedMovies
-                movies={movies}
-              />}
+              <ProtectedRouteElement
+                element={SavedMovies}
+                loggedIn={loggedIn}
+              />
+            }
           />
           <Route 
             path="/profile"
             element={
-              <Profile   
+              <ProtectedRouteElement
+                element={Profile}
+                loggedIn={loggedIn}
+                onUpdateUser={handleUpdateUser}
+                signOut={signOut}
               />}
           />
-          <Route 
+          {!loggedIn && <Route 
             path="/signup"
             element={
               <Register
+                onRegister={handleRegister}
               />}
-          />
-          <Route 
+          />}
+          {!loggedIn && <Route 
             path="/signin"
             element={
               <Login
+                onLogin={handleLogin}
               />}
-          />
+          />}
           <Route
             path="/*"
             element={
               <NotFoundError
-              />}
+              />
+            }
           />
         </Routes>
         <Footer />

@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Validate } from '../../utils/Validate';
 import logo from '../../images/header_logo.svg';
 import './Register.css';
 
-function Register() {
-  const [name, setName] = useState('Дарья');
-  const [email, setEmail] = useState('pochta@yandex.ru');
-  const [password, setPassword] = useState('000000000000');
+function Register({ onRegister }) {
+  const [isValid, setIsValid] = useState(false);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
+  const [formValue, setFormValue] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-  };
+    const { name, email, password } = formValue;
+    onRegister(name, email, password); 
+  }
+
+  const handleValidate = (e) => {
+    const input = e.target;
+    input.nextSibling.textContent = Validate(input, setFormValue, formValue, setIsValid);
+  }
+
+  useEffect(() => {
+    if ((formValue.name === '') ||
+    (formValue.email === '') ||
+    (formValue.password === '')) {
+      setIsValid(false)
+    }
+  }, [formValue, isValid]);
 
   return (
     <div className="authentication">
@@ -46,10 +54,10 @@ function Register() {
                 required
                 minLength="2"
                 maxLength="30"
-                value={name}
-                onChange={handleNameChange}
+                value={formValue.name}
+                onChange={handleValidate}
               />
-              <span className="authentication__input-error">Что-то пошло не так...</span>
+              <span className="authentication__input-error"></span>
             </div>
             <div className="authentication__field">
               <label className="authentication__label">E-mail</label>
@@ -62,10 +70,10 @@ function Register() {
                 required
                 minLength="6"
                 maxLength="30"
-                value={email}
-                onChange={handleEmailChange}
+                value={formValue.email}
+                onChange={handleValidate}
               />
-              <span className="authentication__input-error">Что-то пошло не так...</span>
+              <span className="authentication__input-error"></span>
             </div>
             <div className="authentication__field">
               <label className="authentication__label">Пароль</label>
@@ -78,14 +86,14 @@ function Register() {
                 required
                 minLength="8"
                 maxLength="30"
-                value={password}
-                onChange={handlePasswordChange}
+                value={formValue.password}
+                onChange={handleValidate}
               />
-              <span className="authentication__input-error">Что-то пошло не так...</span>
+              <span className="authentication__input-error"></span>
             </div>
           </fieldset>
         </form>
-        <button className="authentication__save-button" type="submit" name="registerSubmit">Зарегистрироваться</button>
+        <button className="authentication__save-button" type="submit" disabled={(isValid) ? false : true} name="registerSubmit">Зарегистрироваться</button>
         <div className="authentication__signin">
           <p className="authentication__signin-text">Уже зарегистрированы?</p>
           <Link to="/signin" className="authentication__login-link link">Войти</Link>
