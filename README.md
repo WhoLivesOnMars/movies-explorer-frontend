@@ -13,3 +13,5 @@ https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE
 Frontend https://movies.app.nomoredomainsmonster.ru
 
 Backend https://api.movies.app.nomoredomainsmonster.ru
+
+Ссылка на pull request: https://github.com/WhoLivesOnMars/movies-explorer-frontend/pull/2#issue-2022696841
