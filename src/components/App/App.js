@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -11,22 +12,27 @@ import NotFoundError from '../NotFoundError/NotFoundError'
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import api from '../../utils/MainApi';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
-import { register, authorize, checkToken } from '../../utils/auth.js';
+// import { register, authorize, checkToken } from '../../utils/auth.js';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', _id: '' });
   const [loggedIn, setLoggedIn] = useState(null);
-  const [userData, setUserData] = useState({});
+  const [token, setToken] = useState();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     if (token) {
-      checkToken(token)
+      setToken(token);
+    } else setLoggedIn(false);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      api.checkToken(token)
       api.getCurrentUser()
         .then((res) => {
           setCurrentUser({ name: res.name, email: res.email, _id: res._id })
@@ -36,45 +42,50 @@ function App() {
         console.log(err);
       });
     }
-  }, []);
+  }, [token]);
 
   function handleRegister(name, email, password) {
-    register(name, email, password)
+    console.log('Начало регистрации');
+    api.register(name, email, password)
     .then(() => {
+      console.log('Регистрация завершена успешно');
       handleLogin(email, password);
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Ошибка при выполнении запроса:", err);
     })
+    console.log('Конец регистрации');
   }
 
   function handleLogin(email, password) {
-    authorize(email, password)
+    api.authorize(email, password)
     .then((data) => {
       if (data.token) {
-        localStorage.setItem('token', data.token)
+        console.log('Setting token to localStorage:', token);
+        localStorage.setItem('token', data.token);
+        setToken(data.token);
         setLoggedIn(true);
         navigate('/movies', { replace: true });
+      } else {
+        console.log('Ошибка при выполнении запроса: Отсутствует токен в ответе сервера.');
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Ошибка при выполнении запроса:", err);
     })
   }
 
   function signOut() {
     localStorage.clear()
     setLoggedIn(false);
-    checkToken('');
+    api.checkToken('');
     navigate('/', {replace: true});
   }
   
-  function handleUpdateUser({ item }) {
-    api.setUserInfo({ item: item })
+  function handleUpdateUser({ name, email }) {
+    api.setUserInfo({ name, email })
     .then((user) => {
-      if (user) {
-        setCurrentUser({ name: user.data.name, email: user.data.email, _id: user.data._id })
-      }
+      setCurrentUser(user)
     })
     .catch((err) => {
       console.log(err);
@@ -83,7 +94,7 @@ function App() {
   
   return (
     loggedIn === null ? <Preloader /> :
-    <CurrentUserContext.Provider value={{currentUser}}>
+    <CurrentUserContext.Provider value={{currentUser, token}}>
       <div className="page">
         <Header
           loggedIn={loggedIn}

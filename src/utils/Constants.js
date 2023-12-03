@@ -1,5 +1,6 @@
 export const BFMOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-export const BASE_URL = 'https://api.mesto.app.nomoredomainsrocks.ru';
+export const BASE_URL = 'https://api.movies.app.nomoredomainsmonster.ru';
+//export const BASE_URL = 'http://localhost:3000';
 
 export const SMALL = 745;
 export const MEDIUM = 930;

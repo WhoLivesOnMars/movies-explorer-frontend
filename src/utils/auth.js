@@ -1,4 +1,4 @@
-import { BASE_URL } from './Constants';
+/*import { BASE_URL } from './Constants';
 
 function getJson(res) {
   if (res.ok) {
@@ -34,7 +34,7 @@ export const authorize = (email, password) => {
     }
   })
 };
-
+/*
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
@@ -46,4 +46,4 @@ export const checkToken = (token) => {
   })
   .then(getJson)
   .then(data => data)
-}
+}*/

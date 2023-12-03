@@ -3,11 +3,13 @@ import { BASE_URL } from './Constants';
 class Api {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
+    this._token = '';
   }
 
   _getHeaders() {
     return {
-      authorization: `Bearer ${localStorage.getItem('token')} `,
+      authorization: this._token,
+      "Accept": "application/json",
       "Content-Type": "application/json",
     };
   }
@@ -30,14 +32,13 @@ class Api {
   });
   }
 
-  setUserInfo({ item }) {
+  setUserInfo(name, email) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._getHeaders(),
       body: JSON.stringify({
-        name: item.name,
-        email: item.email,
-        password: item.password
+        name: name,
+        email: email,
       })
     });
   }
@@ -74,6 +75,46 @@ class Api {
       method: 'DELETE',
       headers: this._getHeaders(),
     });
+  }
+
+  register(name, email, password) {
+    console.log('Выполняется запрос на регистрацию');
+    return this._request(`${this._baseUrl}/signup`, {
+      method: 'POST',
+      headers: this._getHeaders(),
+      body: JSON.stringify({ name, email, password })
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Ошибка регистрации: ${res.status}`);
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+  
+   authorize(email, password) {
+    console.log('Выполняется запрос на вход');
+    return this._request(`${this._baseUrl}/signin`, {
+      method: 'POST',
+      headers: this._getHeaders(),
+      body: JSON.stringify({ email, password })
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Ошибка регистрации: ${res.status}`);
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+  
+  checkToken(token) {
+    this._token = `Bearer ${token}`
   }
 }
 

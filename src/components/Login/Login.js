@@ -78,12 +78,12 @@ function Login({ onLogin }) {
               <span className="authentication__input-error" />
             </div>
           </fieldset>
+          <button className="authentication__submit-button" type="submit" onSubmit={handleSubmit} disabled={(isValid) ? false : true} name="registerSubmit">Войти</button>
+          <div className="authentication__signup">
+            <p className="authentication__signup-text">Еще не зарегистрированы?</p>
+            <Link to="/signup" className="authentication__login-link link">Регистрация</Link>
+          </div>
         </form>
-        <button className="authentication__submit-button" type="submit" disabled={(isValid) ? false : true} name="registerSubmit">Войти</button>
-        <div className="authentication__signup">
-          <p className="authentication__signup-text">Еще не зарегистрированы?</p>
-          <Link to="/signup" className="authentication__login-link link">Регистрация</Link>
-        </div>
       </div>
     </div>
   )

@@ -92,12 +92,12 @@ function Register({ onRegister }) {
               <span className="authentication__input-error"></span>
             </div>
           </fieldset>
+          <button className="authentication__save-button" type="submit" disabled={(isValid) ? false : true} name="registerSubmit">Зарегистрироваться</button>
+          <div className="authentication__signin">
+            <p className="authentication__signin-text">Уже зарегистрированы?</p>
+            <Link to="/signin" className="authentication__login-link link">Войти</Link>
+          </div>
         </form>
-        <button className="authentication__save-button" type="submit" disabled={(isValid) ? false : true} name="registerSubmit">Зарегистрироваться</button>
-        <div className="authentication__signin">
-          <p className="authentication__signin-text">Уже зарегистрированы?</p>
-          <Link to="/signin" className="authentication__login-link link">Войти</Link>
-        </div>
       </div>
     </div>
   );
