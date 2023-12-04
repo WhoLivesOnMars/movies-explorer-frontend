@@ -9,7 +9,6 @@ class Api {
   _getHeaders() {
     return {
       authorization: this._token,
-      "Accept": "application/json",
       "Content-Type": "application/json",
     };
   }
