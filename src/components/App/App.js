@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -10,20 +11,58 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFoundError from '../NotFoundError/NotFoundError'
 import Footer from '../Footer/Footer';
-import Preloader from '../Preloader/Preloader';
 import api from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute.js';
-// import { register, authorize, checkToken } from '../../utils/auth.js';
+import { register, authorize, checkToken } from '../../utils/auth.js';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ name: '', email: '', _id: '' });
-  const [loggedIn, setLoggedIn] = useState(null);
-  const [token, setToken] = useState();
+  const [currentUser, setCurrentUser] = useState({ _id: '', name: '', email: '' });
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const navigation = ((path) => {
+    navigate(path, { replace: false })
+  })
 
   useEffect(() => {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token')
+      checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            if (location.pathname === '/signup' || location.pathname === '/signin') {
+              navigation('/movies');
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [loggedIn])
+
+  const setUser = useCallback(() => {
+    api.getCurrentUser()
+      .then((user) => {
+        setCurrentUser({ _id: user.data._id, name: user.data.name, email: user.data.email })
+      })
+      .catch((e) => {
+        setLoggedIn(false);
+        navigation('/signin');
+      })
+  }, [currentUser])
+
+  useEffect(() => {
+    if (loggedIn) {
+      setUser()
+    }
+  }, [loggedIn]);
+
+  /* useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setToken(token);
@@ -42,11 +81,11 @@ function App() {
         console.log(err);
       });
     }
-  }, [token]);
+  }, [token]); */
 
   function handleRegister(name, email, password) {
     console.log('Начало регистрации');
-    api.register(name, email, password)
+    register(name, email, password)
     .then(() => {
       console.log('Регистрация завершена успешно');
       handleLogin(email, password);
@@ -58,21 +97,21 @@ function App() {
   }
 
   function handleLogin(email, password) {
-    api.authorize(email, password)
-    .then((data) => {
-      if (data.token) {
-        console.log('Setting token to localStorage:', token);
-        localStorage.setItem('token', data.token);
-        setToken(data.token);
-        setLoggedIn(true);
-        navigate('/movies', { replace: true });
-      } else {
-        console.log('Ошибка при выполнении запроса: Отсутствует токен в ответе сервера.');
-      }
-    })
-    .catch((err) => {
-      console.log("Ошибка при выполнении запроса:", err);
-    })
+    authorize(email, password)
+      .then((data) => {
+        console.log('Response from server:', data);
+        if (data.token) {
+          console.log('Setting token to localStorage:', data);
+          localStorage.setItem('token', data.token);
+          setLoggedIn(true);
+          navigation('/movies');
+        } else {
+          console.log('Ошибка при выполнении запроса: Отсутствует токен в ответе сервера.');
+        }
+      })
+      .catch((err) => {
+        console.log("Ошибка при выполнении запроса:", err);
+      });
   }
 
   function signOut() {
@@ -93,8 +132,7 @@ function App() {
   }
   
   return (
-    loggedIn === null ? <Preloader /> :
-    <CurrentUserContext.Provider value={{currentUser, token}}>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header
           loggedIn={loggedIn}
@@ -136,20 +174,20 @@ function App() {
                 signOut={signOut}
               />}
           />
-          {!loggedIn && <Route 
+          <Route 
             path="/signup"
             element={
               <Register
                 onRegister={handleRegister}
               />}
-          />}
-          {!loggedIn && <Route 
+          />
+          <Route 
             path="/signin"
             element={
               <Login
                 onLogin={handleLogin}
               />}
-          />}
+          />
           <Route
             path="/*"
             element={

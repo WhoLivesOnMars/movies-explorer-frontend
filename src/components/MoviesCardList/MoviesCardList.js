@@ -7,8 +7,8 @@ function MoviesCardList({ movies, onShowMore, showMoreVisibility, onSaveMovie, o
   return (
     <section className="movies">
       <ul className="movies__cells">
-        {movies.map((movie) => (
-          <li className="movies__list">
+        {movies.map((movie, index) => (
+          <li className="movies__list" key={index}>
             <MoviesCard
               key={movie.id || movie._id}
               movie={movie}

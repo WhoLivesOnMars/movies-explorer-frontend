@@ -1,4 +1,4 @@
-/*import { BASE_URL } from './Constants';
+import { BASE_URL } from './Constants';
 
 function getJson(res) {
   if (res.ok) {
@@ -11,39 +11,41 @@ export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      "Accept": "application/json",
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ name, email, password })
   })
-  .then(getJson)
+  .then((res) => {
+    return res
+  })
+  .catch(err => console.log(err))
 };
 
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      "Accept": "application/json",
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ email, password })
   })
-  .then(getJson)
-  .then((data) => {
-    if (data.token){
-      localStorage.setItem('token', data.token);
-      return data;
-    }
+  .then((res) => {
+    return res
   })
+  .catch(err => console.log(err))
 };
-/*
+
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
+      "Authorization": `Bearer ${token}`
     }
   })
-  .then(getJson)
-  .then(data => data)
-}*/
+    .then(getJson)
+    .then(data => data)
+};
