@@ -31,14 +31,15 @@ class Api {
   });
   }
 
-  setUserInfo(name, email) {
+  setUserInfo({ item }) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._getHeaders(),
       credentials: 'include',
       body: JSON.stringify({
-        name: name,
-        email: email,
+        name: item.name,
+        email: item.email,
+        password: item.password
       })
     });
   }
@@ -51,7 +52,7 @@ class Api {
     });
   }
 
-  saveMovies(item) {
+  saveMovies({ item }) {
     return this._request(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._getHeaders(),

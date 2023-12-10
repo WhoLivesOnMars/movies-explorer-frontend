@@ -121,10 +121,10 @@ function App() {
     navigate('/', {replace: true});
   }
   
-  function handleUpdateUser({ name, email }) {
-    api.setUserInfo({ name, email })
+  function handleUpdateUser({ item }) {
+    api.setUserInfo({ item: item })
     .then((user) => {
-      setCurrentUser(user)
+      setCurrentUser({ _id: user.data._id, name: user.data.name, email: user.data.email })
     })
     .catch((err) => {
       console.log(err);

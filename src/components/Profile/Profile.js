@@ -4,7 +4,7 @@ import { Validate } from '../../utils/Validate';
 import './Profile.css';
 
 function Profile({ onUpdateUser, signOut }) {
-  const { user } = useContext(CurrentUserContext);
+  const user = useContext(CurrentUserContext);
   const [isValid, setIsValid] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -47,7 +47,7 @@ function Profile({ onUpdateUser, signOut }) {
     <div className="profile">
       <div className="profile__container">
         <h1 className="profile__title">
-          Привет, {formValue.name}!
+          Привет, {user.name}!
         </h1>
         <form className="profile__form">
           <fieldset className="profile__fieldset">
