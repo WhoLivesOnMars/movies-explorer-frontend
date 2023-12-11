@@ -86,15 +86,18 @@ function Profile({ onUpdateUser, signOut }) {
           </fieldset>
         </form>
         {isEditing ?
-        <button 
-          className="profile__button profile__button_save" 
-          type="button" 
-          name="registerSubmit"
-          disabled={(isValid) ? false : true}
-          onClick={handleSubmit}
-        >
-          Сохранить
-        </button>
+        <>
+          <div className='profile__err'></div>
+          <button 
+            className="profile__button profile__button_save" 
+            type="button" 
+            name="registerSubmit"
+            disabled={(isValid) ? false : true}
+            onClick={handleSubmit}
+          >
+            Сохранить
+          </button>
+        </>
         :
         <>
           <button 

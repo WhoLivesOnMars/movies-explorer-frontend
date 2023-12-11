@@ -76,27 +76,53 @@ function Movies() {
   };
 
   function handleSaveMovie(movie) {
-    api.saveMovies(movie)
+    console.log(movie);
+    api.saveMovies({ item: movie })
       .then((res) => {
         setSavedMovies([res, ...savedMovies]);
       })
     .catch((err) => {
-      console.log(err);
+      console.error('Error while sending movie to server:', err);
     });
   }
 
+/*
+  function handleSaveMovie(movie) {
+    console.log(movie);
+    api.saveMovies({
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: movie.image,
+      trailerLink: movie.trailerLink,
+      thumbnail: movie.thumbnail,
+      movieId: movie.movieId,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    })
+    .then((res) => {
+      console.log('Server response:', res);
+      setSavedMovies([res, ...savedMovies]);
+    })
+    .catch((err) => {
+      console.error('Error while sending movie to server:', err);
+    });
+  }*/
+
   function handleDeleteMovie(movie) {
-    const id = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)._id;
+    const id = savedMovies.find((elm) => elm.movieId === movie.id)._id;
     api.deleteMovie(id)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter((savedMovie) => savedMovie._id !== id);
+        const updatedSavedMovies = savedMovies.filter((elm) => elm._id !== id);
         setSavedMovies(updatedSavedMovies);
       })
       .catch((err) => console.log(err));
   }
 
   function handleCheckSaving(movie) {
-    return savedMovies.some((savedMovie) => savedMovie.movieId === movie.id);
+    return savedMovies.some((elm) => elm.movieId === movie.id);
   };
 
   return (

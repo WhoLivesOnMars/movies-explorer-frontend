@@ -27,7 +27,6 @@ class Api {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._getHeaders(),
-      credentials: 'include',
   });
   }
 
@@ -35,7 +34,6 @@ class Api {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._getHeaders(),
-      credentials: 'include',
       body: JSON.stringify({
         name: item.name,
         email: item.email,

@@ -124,7 +124,9 @@ function App() {
   function handleUpdateUser({ item }) {
     api.setUserInfo({ item: item })
     .then((user) => {
+      if (user) {
       setCurrentUser({ _id: user.data._id, name: user.data.name, email: user.data.email })
+      }
     })
     .catch((err) => {
       console.log(err);
