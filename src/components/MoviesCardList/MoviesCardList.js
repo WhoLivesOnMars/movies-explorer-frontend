@@ -10,7 +10,7 @@ function MoviesCardList({ movies, onShowMore, showMoreVisibility, onSaveMovie, o
         {movies.map((movie, index) => (
           <li className="movies__list" key={index}>
             <MoviesCard
-              key={movie.id || movie._id}
+              key={movie._id || movie.id}
               movie={movie}
               onSaveMovie={onSaveMovie}
               onDeleteMovie={onDeleteMovie}

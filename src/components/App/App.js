@@ -149,6 +149,30 @@ function App() {
             }
           />
           <Route 
+            path="/signup"
+            element={
+              <Register
+                onRegister={handleRegister}
+              />}
+          />
+          <Route 
+            path="/signin"
+            element={
+              <Login
+                onLogin={handleLogin}
+              />}
+          />
+          <Route 
+            path="/profile"
+            element={
+              <ProtectedRouteElement
+                element={Profile}
+                loggedIn={loggedIn}
+                onUpdateUser={handleUpdateUser}
+                signOut={signOut}
+              />}
+          />
+          <Route 
             path="/movies"
             element={
               <ProtectedRouteElement 
@@ -165,30 +189,6 @@ function App() {
                 loggedIn={loggedIn}
               />
             }
-          />
-          <Route 
-            path="/profile"
-            element={
-              <ProtectedRouteElement
-                element={Profile}
-                loggedIn={loggedIn}
-                onUpdateUser={handleUpdateUser}
-                signOut={signOut}
-              />}
-          />
-          <Route 
-            path="/signup"
-            element={
-              <Register
-                onRegister={handleRegister}
-              />}
-          />
-          <Route 
-            path="/signin"
-            element={
-              <Login
-                onLogin={handleLogin}
-              />}
           />
           <Route
             path="/*"

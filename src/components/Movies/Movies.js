@@ -7,6 +7,7 @@ import api from '../../utils/MainApi';
 import bfmoviesApi from '../../utils/MoviesApi';
 import MovieSearch from '../../utils/MovieSearch';
 import useWindowWidth from '../../hooks/useWindowWidth';
+import { checkToken } from '../../utils/auth.js';
 import { allMoviesStorage, SMALL, MEDIUM, INTERMEDIATE } from '../../utils/Constants';
 import './Movies.css';
 
@@ -24,18 +25,20 @@ function Movies() {
   const movieSearch = new MovieSearch(bfMovies);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    checkToken(token);
     api.getMovies()
       .then((res) => {
         setSavedMovies(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error('Error in api.getMovies:', err));
     if (!bfMovies.length) {
       bfmoviesApi.getMovies()
         .then((res) => {
           setBfMovies(res);
           localStorage.setItem(localFilms, JSON.stringify(res));
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.error('Error in bfmoviesApi.getMovies:', err));
     }
     setPreloading(false);
   }, []);
@@ -77,7 +80,7 @@ function Movies() {
 
   function handleSaveMovie(movie) {
     console.log(movie);
-    api.saveMovies({ item: movie })
+    api.saveMovies(movie)
       .then((res) => {
         setSavedMovies([res, ...savedMovies]);
       })
@@ -85,31 +88,6 @@ function Movies() {
       console.error('Error while sending movie to server:', err);
     });
   }
-
-/*
-  function handleSaveMovie(movie) {
-    console.log(movie);
-    api.saveMovies({
-      country: movie.country,
-      director: movie.director,
-      duration: movie.duration,
-      year: movie.year,
-      description: movie.description,
-      image: movie.image,
-      trailerLink: movie.trailerLink,
-      thumbnail: movie.thumbnail,
-      movieId: movie.movieId,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
-    })
-    .then((res) => {
-      console.log('Server response:', res);
-      setSavedMovies([res, ...savedMovies]);
-    })
-    .catch((err) => {
-      console.error('Error while sending movie to server:', err);
-    });
-  }*/
 
   function handleDeleteMovie(movie) {
     const id = savedMovies.find((elm) => elm.movieId === movie.id)._id;
@@ -122,6 +100,8 @@ function Movies() {
   }
 
   function handleCheckSaving(movie) {
+    console.log('movie:', movie);
+    console.log('savedMovies:', savedMovies);
     return savedMovies.some((elm) => elm.movieId === movie.id);
   };
 
