@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
@@ -6,33 +6,105 @@ function Navigation({ loggedIn }) {
 
   const location = useLocation(); 
   const isWhiteHeader = location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile';
-  
+  const isActiveLink = (path) => location.pathname === path;
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
   return loggedIn ? (
     <nav className="navigation">
       <ul className="navigation__list hidden">
         <li>
           <NavLink
             to="/movies"
-            className={`link navigation__movies ${isWhiteHeader ? 'navigation__link_active' : 'navigation__link'}`}
-          >Фильмы</NavLink>
+            className={`link navigation__link hidden ${
+              isWhiteHeader ? 'navigation__link_black' : 'navigation__link_white'
+            } ${isActiveLink('/movies') ? 'navigation__link_active' : ''}`}
+          >
+            Фильмы
+          </NavLink>
         </li>
         <li>
           <NavLink
             to="/saved-movies"
-            className={`link navigation__saved-movies ${isWhiteHeader ? 'navigation__link_active' : 'navigation__link'}`}
-          >Сохраненные фильмы</NavLink>
+            className={`link navigation__link hidden ${
+              isWhiteHeader ? 'navigation__link_black' : 'navigation__link_white'
+            } ${isActiveLink('/saved-movies') ? 'navigation__link_active' : ''}`}
+          >
+            Сохраненные фильмы
+          </NavLink>
         </li>
-      </ul> 
-      <NavLink to="/profile" className="button-account link hidden">
-        <button className={`${isWhiteHeader ? 'navigation__account_active' : 'navigation__account'}`} type="button">Аккаунт</button>
+      </ul>
+      <NavLink to="/profile" className="link hidden">
+        <button
+          className={`navigation__account ${isWhiteHeader ? 'navigation__account_transparent' : 'navigation__account_white'}`}
+          type="button"
+        >
+          Аккаунт
+        </button>
       </NavLink>
-    </nav> 
-  ) : ( 
-    <nav className="navigation">
-      <NavLink to="/signup" className="navigation__link link">Регистрация</NavLink>
-      <NavLink to="/signin" className="navigation__link link">Войти</NavLink>
+      <button
+        className={`icon-menu__button ${isWhiteHeader ? 'icon-menu__button_black' : 'icon-menu__button_white'} ${isMenuOpen ? 'icon-menu__button-close' : ''}`}
+        type="button"
+        aria-label="Меню"
+        onClick={handleMenuToggle}
+      />
+      <div className={`icon-menu ${isMenuOpen ? 'icon-menu__active' : ''}`}>
+        <div className="icon-menu__container">
+          <button
+            className="icon-menu__button-close"
+            type="button"
+            onClick={handleMenuToggle}
+          />
+          <ul className="icon-menu__list">
+            <li>
+              <NavLink
+                to="/"
+                className={`link icon-menu__link ${isActiveLink('/') ? 'icon-menu__link_active' : ''}`}
+              >
+                Главная
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/movies"
+                className={`link icon-menu__link ${isActiveLink('/movies') ? 'icon-menu__link_active' : ''}`}
+              >
+                Фильмы
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/saved-movies"
+                className={`link icon-menu__link ${isActiveLink('/saved-movies') ? 'icon-menu__link_active' : ''}`}
+              >
+                Сохраненные фильмы
+              </NavLink>
+            </li>
+          </ul>
+          <NavLink to="/profile" className="link">
+            <button
+              className="navigation__account_transparent"
+              type="button"
+            >
+              Аккаунт
+            </button>
+          </NavLink>
+        </div>
+      </div>
     </nav>
-  )
+  ) : (
+    <nav className="navigation-auth">
+      <NavLink to="/signup" className="navigation__link navigation__link_white link">
+        Регистрация
+      </NavLink>
+      <NavLink to="/signin" className="navigation-auth__button link">
+        Войти
+      </NavLink>
+    </nav>
+  );
 }
 
 export default Navigation;

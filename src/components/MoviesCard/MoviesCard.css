@@ -1,0 +1,119 @@
+.movie {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  max-width: 270px;
+  height: 218px;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0px 16px 24px 0px #0000000D;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.movie__image {
+  width: 100%;
+  height: 151px;
+  object-fit: cover;
+  object-position: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.movie__info-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 14px 12px;
+  box-sizing: border-box;
+}
+
+.movie__name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.movie__duration {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #A0A0A0;
+}
+
+.movie__button {
+  width: 22px;
+  height: 22px;
+  background: url("../../images/movie_button_off.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.movie__button_pressed {
+  width: 22px;
+  height: 22px;
+  background: url("../../images/movie_button_pressed.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.movie__button_saved {
+  width: 16px;
+  height: 16px;
+  background-image: url("../../images/movie_button_delete.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.movie__link {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  height: 151px;
+}
+
+@media (max-width: 768px) {
+  .movie {
+    max-width: 339px;
+    height: 257px;
+  }
+
+  .movie__image {
+    height: 190px;
+  }
+
+  .movie__link {
+    height: 190px;
+  }
+}
+
+@media (max-width: 745px) {
+  .movie {
+    max-width: 300px;
+    height: 235px;
+  }
+
+  .movie__image {
+    height: 168px;
+  }
+
+  .movie__link {
+    height: 168px;
+  }
+}
